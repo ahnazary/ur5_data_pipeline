@@ -1,0 +1,2 @@
+numpy<2.0.0
+paho_mqtt==2.1.0

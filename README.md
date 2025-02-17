@@ -1,31 +1,17 @@
-# python-template-repo
-Python template repository: A ready-to-use template repository with generic Github action workflows, directory structure and files. 
+# Run the project
 
-## Setup sphinx documentation
+## Setup mosquitto
 
-1. Install sphinx requirements (already in requirements.txt)
-
-```bash
-pip install -r requirements.txt
-```
-
-2 . Create sphinx documentation base files
+If you are using using macOS, you can install and run mosquitto using brew.
 
 ```bash
-sphinx-quickstart         
-sphinx-apidoc -o docs src
+brew install mosquitto#
+brew services start mosquitto
 ```
 
-3. Build sphinx documentation
+or restart it using
 
 ```bash
-cd docs
-make html
+brew services restart mosquitto
 ```
 
-or 
-
-```bash
-cd docs
-sphinx-build docs build    
-```
