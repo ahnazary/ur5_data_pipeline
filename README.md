@@ -1,6 +1,14 @@
 # MQTT Data Pipeline
 
-This project is a simple data pipeline that reads angles from an MQTT broker, stores them in a postgres database, and uploads them to an S3 bucket. The project consists of two scripts: `publish_angles.py` and `read_angles.py`. The `publish_angles.py` script publishes random angles to the MQTT broker every 0.1 seconds. The `read_angles.py` script reads the angles from the MQTT broker, stores them in a postgres database and local csv file, and uploads them to an S3 bucket **if AWS credentials are provided**.
+![ur5_data_pipeline](ur5_data_pipeline.png)
+
+This project is a data pipeline that publishes and reads angles for a robot arm into and from an MQTT broker After reading angles, stores them in a postgres database and csv files on local storage and uploads them to an S3 bucket. 
+
+The project consists of three scripts: 
+- `publish_angles.py`: The `publish_angles.py` script publishes random angles to the MQTT broker every 0.1 seconds based on sine function. 
+- `read_angles.py`: The `read_angles.py` script reads the angles from the MQTT broker, stores them in a postgres database and local csv file, and uploads them to an S3 bucket **if AWS credentials are provided**. Evety time the script reads 10 entries, it will load the angles into mentioned storages.
+- `data_visualization`: The `data_visualization` script reads the angles from the postgres database and visualizes them using plotly dash.
+
 
 # Run the project
 
@@ -36,7 +44,7 @@ pip install -r requirements.txt
 python publish_angles.py
 ```
 
-This script will publish random angles to the MQTT broker every 0.1 seconds.
+This script will publish random angles to the MQTT broker every 0.1 seconds. Run this in a separate terminal.
 
 ### start the reader
 
@@ -44,8 +52,18 @@ This script will publish random angles to the MQTT broker every 0.1 seconds.
 python read_angles.py
 ```
 
+Run this script in a separate terminal.
+
 This script will read the angles from the MQTT broker. On exit, the script will dump the angles into a postgres database and local csv file. If AWS S3 credentials are provided (by setting `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables), the script will also upload the csv file to an S3 bucket.
 
+
+### start the data visualization
+
+```bash
+python data_visualization.py
+```
+
+This script will read the angles from the postgres database and visualize them using plotly dash. You can access the visualization by visiting `localhost:8050` in your browser. Run this script in a separate terminal as well.
 
 ## stop the project and clean up
 
