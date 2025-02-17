@@ -44,6 +44,14 @@ def on_message(client, userdata, msg):
         data_list.append(row)
         emit_log(f"Received: {dict(zip(columns, row))}")
 
+        # if the data list is greater than 10, we save it to a CSV and Postgres
+        if len(data_list) >= 10:
+            df = pd.DataFrame(data_list, columns=columns)
+            df.to_csv("ur5_joint_angles.csv", index=False)
+            df.to_sql("ur5_joint_angles", engine, if_exists="append", index=False)
+            data_list = []
+            emit_log("100 rows saved to CSV and Postgres, dataframe cleared")
+
     except Exception as e:
         emit_log(f"Error: {e}")
 
