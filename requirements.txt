@@ -1,4 +1,5 @@
 numpy<2.0.0
-paho_mqtt==2.1.0
-paho-mqtt
+paho_mqtt
 pandas==2.2.3
+SQLAlchemy==2.0.32
+psycopg2-binary==2.9.6

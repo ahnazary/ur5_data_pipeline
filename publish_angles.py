@@ -1,10 +1,10 @@
 import time
+from datetime import datetime
 
 import numpy as np
 import paho.mqtt.client as mqtt
-from datetime import datetime
 
-from utils import emit_log, setup_pg_table
+from utils import emit_log
 
 MQTT_BROKER = "localhost"
 MQTT_PORT = 1883
@@ -29,7 +29,6 @@ def generate_joint_angles(t):
     return angles
 
 
-# MQTT Client setup
 client = mqtt.Client()
 
 
@@ -45,7 +44,7 @@ def publish_joint_angles():
     try:
         while True:
             joint_angles = generate_joint_angles(t)
-            client.publish(MQTT_TOPIC, str(joint_angles))
+            client.publish(MQTT_TOPIC, str(joint_angles), retain=True)
             emit_log(f"Published: {joint_angles}")
 
             t += 0.1
@@ -58,5 +57,4 @@ def publish_joint_angles():
 
 
 if __name__ == "__main__":
-    setup_pg_table()
     publish_joint_angles()
