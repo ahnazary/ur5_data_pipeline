@@ -10,6 +10,9 @@ import boto3
 import pandas as pd
 import sqlalchemy as sa
 
+from pydantic import BaseModel, Field
+from typing import List
+
 logger = logging.getLogger(__name__)
 
 
@@ -115,3 +118,12 @@ class S3Interface:
 
         # upload file to s3
         self.s3_client.upload_file(file_path, bucket_name, "ur5_joint_angles.csv")
+
+class JointAngles(BaseModel):
+    shoulder_pan: float = Field(..., ge=-3.14, le=3.14)
+    shoulder_lift: float = Field(..., ge=-3.14, le=3.14)
+    elbow: float = Field(..., ge=-3.14, le=3.14)
+    wrist_1: float = Field(..., ge=-3.14, le=3.14)
+    wrist_2: float = Field(..., ge=-3.14, le=3.14)
+    wrist_3: float = Field(..., ge=-3.14, le=3.14)
+    timestamp: str

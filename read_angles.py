@@ -10,7 +10,7 @@ import numpy as np
 import paho.mqtt.client as mqtt
 import pandas as pd
 
-from utils import S3Interface, emit_log, pg_engine, setup_pg_table
+from utils import S3Interface, emit_log, pg_engine, setup_pg_table, JointAngles
 
 MQTT_BROKER = "localhost"
 MQTT_PORT = 1883
@@ -38,10 +38,9 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     global data_list
     try:
-        joint_angles = eval(msg.payload.decode())
+        joint_angles = JointAngles.model_validate(eval(msg.payload.decode()))  # Validate data
 
-        # Convert to DataFrame format
-        row = list(joint_angles.values())
+        row = [getattr(joint_angles, column) for column in columns]
         data_list.append(row)
         emit_log(f"Received: {dict(zip(columns, row))}")
 
