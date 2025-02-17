@@ -1,4 +1,4 @@
-# MQTT Data Pipeline
+# UR5 Data Pipeline
 
 ![ur5_data_pipeline](ur5_data_pipeline.png)
 
@@ -6,8 +6,8 @@ This project is a data pipeline that publishes and reads angles for a robot arm 
 
 The project consists of three scripts: 
 - `publish_angles.py`: The `publish_angles.py` script publishes random angles to the MQTT broker every 0.1 seconds based on sine function. 
-- `read_angles.py`: The `read_angles.py` script reads the angles from the MQTT broker, stores them in a postgres database and local csv file, and uploads them to an S3 bucket **if AWS credentials are provided**. Evety time the script reads 10 entries, it will load the angles into mentioned storages.
-- `data_visualization`: The `data_visualization` script reads the angles from the postgres database and visualizes them using plotly dash.
+- `read_angles.py`: The `read_angles.py` script reads the angles from the MQTT broker, stores them in a postgres database and local csv file, and uploads them to an S3 bucket **if AWS credentials are provided**. Evety time the script reads 10 entries, it will load the angles into mentioned storages. This will ensure that in a close to real-time scenario, the angles are stored in the database and uploaded to the S3 bucket.
+- `data_visualization`: The `data_visualization` script reads the angles from the postgres database in real time and visualizes them using plotly dash.
 
 
 # Run the project
