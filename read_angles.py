@@ -55,7 +55,6 @@ def on_message(client, userdata, msg):
             df = pd.DataFrame(data_list, columns=columns)
             df.to_csv("ur5_joint_angles.csv", index=False)
             df.to_sql("ur5_joint_angles", engine, if_exists="append", index=False)
-            emit_log("Data saved to CSV in file named ur5_joint_angles.csv")
             data_list = []
 
     except Exception as e:
